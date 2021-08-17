@@ -10,15 +10,22 @@ function Calculator() {
       setInput("");
     } else if(data === "=") {
        // eslint-disable-next-line no-eval
-       setInput((previousInput) => eval(previousInput));
+       try {
+        setInput((previousInput) => eval(previousInput));
+      } catch (error) {
+        if(error instanceof SyntaxError) {
+          setInput( `INVALID: ${error}`);
+        }
+      }
       } else {
         setInput((previousInput) => `${previousInput}${data}`);
       }
   }
 
   return (
-    <div className="w-10/12 sm:w-7/12 lg:w-5/12 mx-auto">
+    <div className="w-10/12 sm:w-7/12 lg:w-5/12 my-auto mx-auto">
       <div>
+        <h2 className="text-4xl pt-10 text-center">Calculator</h2>
         <input id="inputField" className="w-full border-2 rounded-lg text-3xl my-2 mt-10 pl-3 border-purple-300 h-20" value={input} onChange={(e)=> setInput(e.target.value)} placeholder="enter"/>
       </div>
       <div className="grid gap-2 mx-auto grid-cols-4">
